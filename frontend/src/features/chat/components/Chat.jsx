@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { Fragment, useEffect, useState } from 'react'
-import { useAuthUserContext } from '../../auth'
+import { useAuthUserContext } from '@features/auth'
 import { groupMessages } from '../messageUtils'
 import { getMessages, sendMessage } from '../services/messageService'
 import MessageForm from './MessageForm'

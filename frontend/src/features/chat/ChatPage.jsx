@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useAuthUserContext } from '../auth'
+import { useAuthUserContext } from '@features/auth'
 import Chat from './components/Chat'
 import { getUsers } from './services/userService'
-import AppLayout from '../../shared/AppLayout'
+import AppLayout from '@shared/AppLayout'
 
 const ChatPage = () => {
   const [authUser] = useAuthUserContext()

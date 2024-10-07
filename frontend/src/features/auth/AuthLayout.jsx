@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import Navbar from '../../shared/Navbar'
+import Navbar from '@shared/Navbar'
 
 const AuthLayout = ({ children }) => {
   return (
