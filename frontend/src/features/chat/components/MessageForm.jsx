@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { Button } from '@/features/ui'
 
 const MessageForm = ({ onSend }) => {
   const [content, setContent] = useState('')
@@ -20,7 +21,7 @@ const MessageForm = ({ onSend }) => {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Type a message..."
           />
-          <button type="submit">send</button>
+          <Button type="submit">send</Button>
         </div>
       </form>
     </div>

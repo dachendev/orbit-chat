@@ -1,3 +1,4 @@
+import { Button } from '@/features/ui'
 import { useAuthUserContext } from '../AuthUserContext'
 import PropTypes from 'prop-types'
 
@@ -9,9 +10,9 @@ const LogoutButton = ({ children }) => {
   }
 
   return (
-    <button type="button" onClick={logout}>
+    <Button type="button" onClick={logout}>
       {children}
-    </button>
+    </Button>
   )
 }
 
