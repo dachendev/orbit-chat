@@ -17,7 +17,7 @@ const RegisterForm = () => {
   return (
     <form onSubmit={onSubmit}>
       <p>
-        username:{' '}
+        Username:{' '}
         <input
           type="text"
           value={username}
@@ -25,7 +25,7 @@ const RegisterForm = () => {
         />
       </p>
       <p>
-        password:{' '}
+        Password:{' '}
         <input
           type="password"
           value={password}
@@ -33,7 +33,7 @@ const RegisterForm = () => {
         />
       </p>
       <p>
-        <button>login</button>
+        <button type="submit">Register</button>
       </p>
     </form>
   )

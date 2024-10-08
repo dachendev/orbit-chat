@@ -13,7 +13,7 @@ const LoginForm = ({ onLogin }) => {
   return (
     <form onSubmit={onSubmit}>
       <p>
-        username:{' '}
+        Username:{' '}
         <input
           type="text"
           value={username}
@@ -21,7 +21,7 @@ const LoginForm = ({ onLogin }) => {
         />
       </p>
       <p>
-        password:{' '}
+        Password:{' '}
         <input
           type="password"
           value={password}
@@ -29,7 +29,7 @@ const LoginForm = ({ onLogin }) => {
         />
       </p>
       <p>
-        <button>login</button>
+        <button type="submit">Login</button>
       </p>
     </form>
   )

@@ -32,9 +32,11 @@ const ChatPage = () => {
   return (
     <>
       <AppNavbar />
+      <br />
       <div className="chat-layout">
         <div className="chat-layout__sidebar">
-          <h3>contacts</h3>
+          <h3>Contacts</h3>
+          <br />
           <ContactList
             contacts={contacts}
             onContactClick={onContactClick}

@@ -5,6 +5,7 @@ const AuthLayout = ({ children }) => {
   return (
     <>
       <AppNavbar />
+      <br />
       <div className="container">{children}</div>
     </>
   )

@@ -21,7 +21,7 @@ const LoginPage = () => {
 
   return (
     <AuthLayout>
-      <h2>login</h2>
+      <h2>Login</h2>
       <LoginForm onLogin={onLogin} />
     </AuthLayout>
   )

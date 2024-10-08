@@ -6,6 +6,7 @@ const AppLayout = ({ children }) => {
   return (
     <>
       <AppNavbar />
+      <br />
       <Container>{children}</Container>
     </>
   )

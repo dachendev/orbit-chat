@@ -11,7 +11,7 @@ import AppLayout from './shared/app/AppLayout'
 const HomePage = () => {
   return (
     <AppLayout>
-      <h2>home</h2>
+      <h2>Home</h2>
     </AppLayout>
   )
 }
