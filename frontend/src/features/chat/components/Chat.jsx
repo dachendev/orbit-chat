@@ -66,7 +66,11 @@ const Chat = ({ recipient }) => {
         <strong>{recipient.username}</strong>
       </div>
       <div ref={chatBodyRef} className="chat__body">
-        <MessageList messageGroups={messageGroups} />
+        {messageGroups.length > 0 ? (
+          <MessageList messageGroups={messageGroups} />
+        ) : (
+          <div>There&apos;s nothing here... Send the first message!</div>
+        )}
         <div ref={bottomRef} />
       </div>
       <div className="chat__footer">
