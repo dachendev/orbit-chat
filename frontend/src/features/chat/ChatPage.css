@@ -1,6 +1,6 @@
 .chat-layout {
   display: grid;
-  grid-template-columns: 12rem auto;
+  grid-template-columns: 18rem auto;
   padding: 1rem 0;
 }
 
