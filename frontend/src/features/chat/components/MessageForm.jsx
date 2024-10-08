@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import PropTypes from 'prop-types'
 import { Button } from '@/features/ui'
+import PropTypes from 'prop-types'
+import { useState } from 'react'
+import './MessageForm.css'
 
 const MessageForm = ({ onSend }) => {
   const [content, setContent] = useState('')
@@ -14,7 +15,7 @@ const MessageForm = ({ onSend }) => {
   return (
     <div className="message-form">
       <form onSubmit={onSubmit}>
-        <div className="input-container">
+        <div className="message-form__input-group">
           <input
             type="text"
             value={content}

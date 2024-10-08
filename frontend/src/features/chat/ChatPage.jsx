@@ -6,15 +6,14 @@ import AppLayout from '@shared/AppLayout'
 
 const ChatPage = () => {
   const [authUser] = useAuthUserContext()
-  const [otherUsers, setOtherUsers] = useState([])
+  const [recipients, setRecipients] = useState([])
   const [selectedRecipient, setSelectedRecipient] = useState('')
 
   useEffect(() => {
     getUsers()
       .then((users) => users.filter((p) => p.id !== authUser.id))
       .then((otherUsers) => {
-        setOtherUsers(otherUsers)
-        setSelectedRecipient(otherUsers[0].id)
+        setRecipients(otherUsers)
       })
   }, [])
 
@@ -27,14 +26,17 @@ const ChatPage = () => {
           value={selectedRecipient}
           onChange={(e) => setSelectedRecipient(e.target.value)}
         >
-          {otherUsers.map((user) => (
-            <option key={user.id} value={user.id}>
+          <option value="">Select</option>
+          {recipients.map((user, index) => (
+            <option key={user.id} value={index}>
               {user.username}
             </option>
           ))}
         </select>
       </p>
-      {selectedRecipient && <Chat recipient={selectedRecipient} />}
+      {selectedRecipient && (
+        <Chat recipient={recipients[Number(selectedRecipient)]} />
+      )}
     </AppLayout>
   )
 }

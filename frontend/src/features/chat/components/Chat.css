@@ -1,0 +1,14 @@
+.chat {
+  border: 1px solid #808080;
+  border-radius: 0.25rem;
+}
+
+.chat__header,
+.chat__body,
+.chat__footer {
+  padding: 0.5rem 1rem;
+}
+
+.chat__header {
+  border-bottom: 1px solid #808080;
+}

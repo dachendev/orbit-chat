@@ -1,0 +1,28 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.message__content {
+  margin-bottom: 0.25rem;
+  padding: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.message--sender .message__content {
+  color: #fff;
+  background-color: #3366cc;
+}
+
+.message--recipient .message__content {
+  border-color: #808080;
+  color: #000;
+  background-color: #f0f0f0;
+}
+
+.message__time {
+  font-size: 0.75rem;
+  color: #808080;
+}

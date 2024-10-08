@@ -1,0 +1,50 @@
+.message-list__date-separator,
+.message-list__item {
+  margin-bottom: 0.5rem;
+}
+
+.message-list__date-separator {
+  overflow: hidden;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #808080;
+
+  &:before,
+  &:after {
+    display: inline-block;
+    content: '';
+    position: relative;
+    width: 50%;
+    border-top: 1px solid #808080;
+    vertical-align: middle;
+  }
+
+  &::before {
+    right: 0.5rem;
+    margin-left: -50%;
+  }
+
+  &::after {
+    left: 0.5rem;
+    margin-right: -50%;
+  }
+}
+
+.message-list__item {
+  display: grid;
+  width: 100%;
+}
+
+.message-list__item .message--recipient {
+  justify-self: flex-start;
+  align-items: flex-start;
+}
+
+.message-list__item .message--sender {
+  justify-self: flex-end;
+  align-items: flex-end;
+}
+
+.message-list__item .message {
+  max-width: 12rem;
+}

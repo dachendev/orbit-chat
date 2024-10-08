@@ -1,29 +1,29 @@
+import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import './Message.css'
 
-const Message = ({ message, isCurrentUser }) => {
+const Message = ({ message, isSender }) => {
+  const messageClasses = classNames(
+    'message',
+    isSender ? 'message--sender' : 'message--recipient'
+  )
+
+  const time = message.createdAt.toLocaleTimeString([], {
+    hour: 'numeric',
+    minute: 'numeric',
+  })
+
   return (
-    <div
-      className={`message ${
-        isCurrentUser ? 'message-sent' : 'message-received'
-      }`}
-    >
-      <div className="message-content">
-        <span className="message-sender">{message.sender.username}</span>
-        <span className="message-text">{message.content}</span>
-        <span className="message-time">
-          {message.createdAt.toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          })}
-        </span>
-      </div>
+    <div className={messageClasses}>
+      <div className="message__content">{message.content}</div>
+      <span className="message__time">{time}</span>
     </div>
   )
 }
 
 Message.propTypes = {
   message: PropTypes.object,
-  isCurrentUser: PropTypes.bool,
+  isSender: PropTypes.bool,
 }
 
 export default Message

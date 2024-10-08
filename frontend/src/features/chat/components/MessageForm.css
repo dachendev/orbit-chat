@@ -1,0 +1,9 @@
+.message-form__input-group {
+  display: flex;
+  width: 100%;
+
+  & input {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+  }
+}
