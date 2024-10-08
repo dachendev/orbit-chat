@@ -1,6 +1,7 @@
 import { useAuthUserContext } from '@features/auth'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
+import { useEffect, useRef } from 'react'
 import { groupMessages } from '../messageUtils'
 import { createMessage, getMessages } from '../services/messageService'
 import './Chat.css'
@@ -10,6 +11,19 @@ import MessageList from './MessageList'
 const Chat = ({ recipient }) => {
   const [authUser] = useAuthUserContext()
   const queryClient = useQueryClient()
+  const messageListRef = useRef(null)
+
+  useEffect(() => {
+    messageListRef.current.scrollToBottom()
+  }, [recipient])
+
+  const onSend = (content) => {
+    newMessageMutation.mutate({
+      content,
+      sender: authUser.id,
+      recipient: recipient.id,
+    })
+  }
 
   const queryKey = ['messages', authUser.id, recipient.id]
 
@@ -20,14 +34,6 @@ const Chat = ({ recipient }) => {
       queryClient.setQueryData(queryKey, messages.concat(newMessage))
     },
   })
-
-  const onSend = (content) => {
-    newMessageMutation.mutate({
-      content,
-      sender: authUser.id,
-      recipient: recipient.id,
-    })
-  }
 
   const result = useQuery({
     queryKey,
@@ -42,7 +48,7 @@ const Chat = ({ recipient }) => {
         <strong>{recipient.username}</strong>
       </div>
       <div className="chat__body">
-        <MessageList messageGroups={messageGroups} />
+        <MessageList messageGroups={messageGroups} ref={messageListRef} />
       </div>
       <div className="chat__footer">
         <MessageForm onSend={onSend} />
