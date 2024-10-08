@@ -5,11 +5,17 @@ import './ChatPage.css'
 import Chat from './components/Chat'
 import RecipientList from './components/RecipientList'
 import { getUsers } from './services/userService'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const ChatPage = () => {
+  const recipientId = useParams().recipientId
   const [authUser] = useAuthUserContext()
   const [recipients, setRecipients] = useState([])
-  const [selectedRecipient, setSelectedRecipient] = useState(null)
+  const navigate = useNavigate()
+
+  const selectedRecipient = recipientId
+    ? recipients.find((p) => p.id === recipientId)
+    : null
 
   useEffect(() => {
     getUsers()
@@ -20,7 +26,7 @@ const ChatPage = () => {
   }, [])
 
   const onRecipientClick = (recipient) => {
-    setSelectedRecipient(recipient)
+    navigate(`/chat/${recipient.id}`)
   }
 
   return (
@@ -34,7 +40,11 @@ const ChatPage = () => {
           />
         </div>
         <div className="chat-layout__main">
-          {selectedRecipient && <Chat recipient={selectedRecipient} />}
+          {selectedRecipient ? (
+            <Chat recipient={selectedRecipient} />
+          ) : (
+            <div>Select a recipient to get started!</div>
+          )}
         </div>
       </div>
     </>

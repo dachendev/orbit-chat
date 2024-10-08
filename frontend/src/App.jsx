@@ -25,6 +25,7 @@ const AppViews = () => {
 
   return (
     <Routes>
+      <Route path="/chat/:recipientId" element={<ChatPage />} />
       <Route path="/chat" element={<ChatPage />} />
       <Route path="/" element={<HomePage />} />
     </Routes>
