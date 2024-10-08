@@ -1,6 +1,6 @@
 .message-list__date-separator,
 .message-list__item {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .message-list__date-separator {
@@ -37,12 +37,10 @@
 
 .message-list__item .message--recipient {
   justify-self: flex-start;
-  align-items: flex-start;
 }
 
 .message-list__item .message--sender {
   justify-self: flex-end;
-  align-items: flex-end;
 }
 
 .message-list__item .message {

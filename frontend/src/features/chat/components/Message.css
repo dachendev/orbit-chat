@@ -1,22 +1,16 @@
 .message {
-  display: flex;
-  flex-direction: column;
   width: 100%;
-}
-
-.message__content {
-  margin-bottom: 0.25rem;
   padding: 0.5rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
 }
 
-.message--sender .message__content {
+.message--sender {
   color: #fff;
   background-color: #3366cc;
 }
 
-.message--recipient .message__content {
+.message--recipient {
   border-color: #808080;
   color: #000;
   background-color: #f0f0f0;
@@ -24,5 +18,12 @@
 
 .message__time {
   font-size: 0.75rem;
+}
+
+.message--sender .message__time {
+  color: #a0a0a0;
+}
+
+.message--recipient .message__time {
   color: #808080;
 }
