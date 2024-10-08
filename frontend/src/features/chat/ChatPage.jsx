@@ -47,7 +47,7 @@ const ChatPage = () => {
           {recipient ? (
             <Chat recipient={recipient} />
           ) : (
-            <div>Select a recipient to get started!</div>
+            <div>Select a contact to get started!</div>
           )}
         </div>
       </div>
