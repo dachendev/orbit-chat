@@ -26,7 +26,7 @@ const ChatPage = () => {
   }, [])
 
   const onContactClick = (contact) => {
-    navigate(`/chat/${contact.id}`)
+    navigate(`/chats/${contact.id}`)
   }
 
   return (
@@ -35,7 +35,7 @@ const ChatPage = () => {
       <br />
       <div className="chat-layout">
         <div className="chat-layout__sidebar">
-          <h3>Contacts</h3>
+          <h2>Chats</h2>
           <br />
           <ContactList
             contacts={contacts}
