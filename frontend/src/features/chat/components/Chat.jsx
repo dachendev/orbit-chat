@@ -1,33 +1,40 @@
 import { useAuthUserContext } from '@features/auth'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
 import { groupMessages } from '../messageUtils'
-import { getMessages, sendMessage } from '../services/messageService'
+import { createMessage, getMessages } from '../services/messageService'
+import './Chat.css'
 import MessageForm from './MessageForm'
 import MessageList from './MessageList'
-import './Chat.css'
 
 const Chat = ({ recipient }) => {
   const [authUser] = useAuthUserContext()
-  const [messages, setMessages] = useState([])
+  const queryClient = useQueryClient()
 
-  useEffect(() => {
-    getMessages(authUser.id, recipient.id).then((messages) =>
-      setMessages(messages)
-    )
-  }, [authUser, recipient])
+  const queryKey = ['messages', authUser.id, recipient.id]
+
+  const newMessageMutation = useMutation({
+    mutationFn: createMessage,
+    onSuccess: (newMessage) => {
+      const messages = queryClient.getQueryData(queryKey)
+      queryClient.setQueryData(queryKey, messages.concat(newMessage))
+    },
+  })
 
   const onSend = (content) => {
-    const newMessage = {
+    newMessageMutation.mutate({
       content,
       sender: authUser.id,
       recipient: recipient.id,
-    }
-
-    sendMessage(newMessage)
+    })
   }
 
-  const messageGroups = groupMessages(messages)
+  const result = useQuery({
+    queryKey,
+    queryFn: () => getMessages(authUser.id, recipient.id),
+  })
+
+  const messageGroups = groupMessages(result.data || [])
 
   return (
     <div className="chat">

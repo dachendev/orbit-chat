@@ -3,6 +3,11 @@ const Message = require('./Message')
 
 messageRoutes.post('/', async (request, response) => {
   const message = await Message.create(request.body)
+
+  // populate
+  await message.populate('sender')
+  await message.populate('recipient')
+
   return response.status(201).json(message)
 })
 
