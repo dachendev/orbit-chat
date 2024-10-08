@@ -1,0 +1,10 @@
+.chat-layout {
+  display: grid;
+  grid-template-columns: 12rem auto;
+  padding: 1rem 0;
+}
+
+.chat-layout__sidebar,
+.chat-layout__main {
+  padding: 0 1rem;
+}

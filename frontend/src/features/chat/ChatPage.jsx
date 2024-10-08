@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react'
+import Navbar from '@/shared/Navbar'
 import { useAuthUserContext } from '@features/auth'
+import { useEffect, useState } from 'react'
+import './ChatPage.css'
 import Chat from './components/Chat'
+import RecipientList from './components/RecipientList'
 import { getUsers } from './services/userService'
-import AppLayout from '@shared/AppLayout'
 
 const ChatPage = () => {
   const [authUser] = useAuthUserContext()
   const [recipients, setRecipients] = useState([])
-  const [selectedRecipient, setSelectedRecipient] = useState('')
+  const [selectedRecipient, setSelectedRecipient] = useState(null)
 
   useEffect(() => {
     getUsers()
@@ -17,27 +19,25 @@ const ChatPage = () => {
       })
   }, [])
 
+  const onRecipientClick = (recipient) => {
+    setSelectedRecipient(recipient)
+  }
+
   return (
-    <AppLayout>
-      <h2>chat</h2>
-      <p>
-        recipient:
-        <select
-          value={selectedRecipient}
-          onChange={(e) => setSelectedRecipient(e.target.value)}
-        >
-          <option value="">Select</option>
-          {recipients.map((user, index) => (
-            <option key={user.id} value={index}>
-              {user.username}
-            </option>
-          ))}
-        </select>
-      </p>
-      {selectedRecipient && (
-        <Chat recipient={recipients[Number(selectedRecipient)]} />
-      )}
-    </AppLayout>
+    <>
+      <Navbar />
+      <div className="chat-layout">
+        <div className="chat-layout__sidebar">
+          <RecipientList
+            recipients={recipients}
+            onRecipientClick={onRecipientClick}
+          />
+        </div>
+        <div className="chat-layout__main">
+          {selectedRecipient && <Chat recipient={selectedRecipient} />}
+        </div>
+      </div>
+    </>
   )
 }
 
