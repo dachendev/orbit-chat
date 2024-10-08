@@ -38,7 +38,7 @@ const ChatPage = () => {
           <RecipientList
             recipients={recipients}
             onRecipientClick={onRecipientClick}
-            activeRecipientId={recipient.id}
+            activeRecipientId={recipient ? recipient.id : null}
           />
         </div>
         <div className="chat-layout__main">
