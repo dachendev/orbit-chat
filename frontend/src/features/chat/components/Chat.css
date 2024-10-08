@@ -11,6 +11,7 @@
 
 .chat__header {
   border-bottom: 1px solid #808080;
+  background-color: #c0c0c0;
 }
 
 .chat__body {

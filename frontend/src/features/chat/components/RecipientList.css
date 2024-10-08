@@ -19,6 +19,6 @@
 }
 
 .recipient-list__button--active {
-  color: white;
-  background-color: #3366cc;
+  border-color: #808080;
+  background-color: #c0c0c0;
 }
