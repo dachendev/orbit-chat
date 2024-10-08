@@ -7,7 +7,6 @@ import {
 import { LoginPage, RegisterPage, useAuthUserContext } from './features/auth'
 import { ChatPage } from './features/chat'
 import AppLayout from './shared/AppLayout'
-import { Helmet } from 'react-helmet'
 
 const HomePage = () => {
   return (
@@ -35,10 +34,6 @@ const AppViews = () => {
 const App = () => {
   return (
     <Router>
-      <Helmet>
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-      </Helmet>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
