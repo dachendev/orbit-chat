@@ -33,7 +33,10 @@ select {
   font: inherit;
 }
 
-button:not(:disabled),
-a[role='button'] {
+button:not(:disabled) {
   cursor: pointer;
+}
+
+a {
+  color: inherit;
 }

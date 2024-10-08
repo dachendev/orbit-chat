@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 import { LoginPage, RegisterPage, useAuthUserContext } from './features/auth'
 import { ChatPage } from './features/chat'
-import AppLayout from './shared/AppLayout'
+import AppLayout from './shared/app/AppLayout'
 
 const HomePage = () => {
   return (

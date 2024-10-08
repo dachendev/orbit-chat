@@ -1,11 +1,11 @@
 import { Container } from '@/features/ui'
-import Navbar from './Navbar'
+import AppNavbar from './AppNavbar'
 import PropTypes from 'prop-types'
 
 const AppLayout = ({ children }) => {
   return (
     <>
-      <Navbar />
+      <AppNavbar />
       <Container>{children}</Container>
     </>
   )

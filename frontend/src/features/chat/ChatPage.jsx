@@ -1,4 +1,4 @@
-import Navbar from '@/shared/Navbar'
+import { AppNavbar } from '@shared/app'
 import { useAuthUserContext } from '@features/auth'
 import { useEffect, useState } from 'react'
 import './ChatPage.css'
@@ -31,7 +31,7 @@ const ChatPage = () => {
 
   return (
     <>
-      <Navbar />
+      <AppNavbar />
       <div className="chat-layout">
         <div className="chat-layout__sidebar">
           <h3>contacts</h3>

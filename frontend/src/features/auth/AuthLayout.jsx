@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
-import Navbar from '@shared/Navbar'
+import { AppNavbar } from '@shared/app'
 
 const AuthLayout = ({ children }) => {
   return (
     <>
-      <Navbar />
+      <AppNavbar />
       <div className="container">{children}</div>
     </>
   )
