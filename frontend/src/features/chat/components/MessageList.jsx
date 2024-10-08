@@ -1,17 +1,12 @@
 import { useAuthUserContext } from '@/features/auth'
+import { format } from 'date-fns'
 import PropTypes from 'prop-types'
-import { forwardRef, Fragment, useImperativeHandle, useRef } from 'react'
+import { Fragment } from 'react'
 import Message from './Message'
 import './MessageList.css'
-import { format, formatRelative } from 'date-fns'
 
-const MessageList = forwardRef(({ messageGroups }, ref) => {
+const MessageList = ({ messageGroups }) => {
   const [authUser] = useAuthUserContext()
-  const bottomRef = useRef(null)
-
-  useImperativeHandle(ref, () => ({
-    scrollToBottom: () => bottomRef.current.scrollIntoView(),
-  }))
 
   return (
     <div className="message-list">
@@ -31,10 +26,9 @@ const MessageList = forwardRef(({ messageGroups }, ref) => {
           </Fragment>
         )
       })}
-      <div ref={bottomRef} />
     </div>
   )
-})
+}
 
 MessageList.displayName = 'MessageList'
 

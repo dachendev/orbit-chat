@@ -1,7 +1,7 @@
 import { useAuthUserContext } from '@features/auth'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { groupMessages } from '../messageUtils'
 import { createMessage, getMessages } from '../services/messageService'
 import './Chat.css'
@@ -11,19 +11,23 @@ import MessageList from './MessageList'
 const Chat = ({ recipient }) => {
   const [authUser] = useAuthUserContext()
   const queryClient = useQueryClient()
-  const messageListRef = useRef(null)
+  const chatBodyRef = useRef(null)
+  const bottomRef = useRef(null)
+  const [isAtBottom, setIsAtBottom] = useState(true)
+
+  const scrollToBottom = () => bottomRef.current.scrollIntoView()
 
   useEffect(() => {
-    messageListRef.current.scrollToBottom()
-  }, [recipient])
+    const chatBodyElem = chatBodyRef.current
 
-  const onSend = (content) => {
-    newMessageMutation.mutate({
-      content,
-      sender: authUser.id,
-      recipient: recipient.id,
-    })
-  }
+    const onScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = chatBodyElem
+      setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 1) // -1 for rounding errors
+    }
+
+    chatBodyElem.addEventListener('scroll', onScroll)
+    return () => chatBodyElem.removeEventListener('scroll', onScroll)
+  })
 
   const queryKey = ['messages', authUser.id, recipient.id]
 
@@ -35,6 +39,14 @@ const Chat = ({ recipient }) => {
     },
   })
 
+  const onSend = (content) => {
+    newMessageMutation.mutate({
+      content,
+      sender: authUser.id,
+      recipient: recipient.id,
+    })
+  }
+
   const result = useQuery({
     queryKey,
     queryFn: () => getMessages(authUser.id, recipient.id),
@@ -42,13 +54,20 @@ const Chat = ({ recipient }) => {
 
   const messageGroups = groupMessages(result.data || [])
 
+  useEffect(() => {
+    if (isAtBottom) {
+      scrollToBottom()
+    }
+  }, [isAtBottom, messageGroups])
+
   return (
     <div className="chat">
       <div className="chat__header">
         <strong>{recipient.username}</strong>
       </div>
-      <div className="chat__body">
-        <MessageList messageGroups={messageGroups} ref={messageListRef} />
+      <div ref={chatBodyRef} className="chat__body">
+        <MessageList messageGroups={messageGroups} />
+        <div ref={bottomRef} />
       </div>
       <div className="chat__footer">
         <MessageForm onSend={onSend} />
