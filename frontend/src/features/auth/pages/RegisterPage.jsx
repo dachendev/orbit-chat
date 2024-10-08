@@ -1,12 +1,12 @@
-import AuthLayout from '../AuthLayout'
+import { AppLayout } from '@/shared/app'
 import RegisterForm from '../components/RegisterForm'
 
 const RegisterPage = () => {
   return (
-    <AuthLayout>
+    <AppLayout>
       <h2>Register</h2>
       <RegisterForm />
-    </AuthLayout>
+    </AppLayout>
   )
 }
 

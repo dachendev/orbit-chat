@@ -1,8 +1,8 @@
+import { AppLayout } from '@/shared/app'
 import { Navigate, useNavigate } from 'react-router-dom'
-import LoginForm from '../components/LoginForm'
 import { useAuthUserContext } from '../AuthUserContext'
 import { login } from '../authService'
-import AuthLayout from '../AuthLayout'
+import LoginForm from '../components/LoginForm'
 
 const LoginPage = () => {
   const [authUser, authUserDispatch] = useAuthUserContext()
@@ -20,10 +20,10 @@ const LoginPage = () => {
   }
 
   return (
-    <AuthLayout>
+    <AppLayout>
       <h2>Login</h2>
       <LoginForm onLogin={onLogin} />
-    </AuthLayout>
+    </AppLayout>
   )
 }
 
