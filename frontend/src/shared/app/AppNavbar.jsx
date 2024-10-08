@@ -38,8 +38,8 @@ const AppNavbar = () => {
               </Link>
             </li>
             <li className="app-navbar__menu-item">
-              <Link to="/chat" className="app-navbar__link">
-                Chat
+              <Link to="/chats" className="app-navbar__link">
+                Chats
               </Link>
             </li>
           </ul>
