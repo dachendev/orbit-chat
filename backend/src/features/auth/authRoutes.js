@@ -1,6 +1,6 @@
 const authRoutes = require('express').Router()
 const bcrypt = require('bcrypt')
-const User = require('../../shared/User')
+const User = require('../users/User')
 const jwt = require('jsonwebtoken')
 
 authRoutes.post('/register', async (request, response) => {
