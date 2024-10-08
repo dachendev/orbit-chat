@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { forwardRef, Fragment, useImperativeHandle, useRef } from 'react'
 import Message from './Message'
 import './MessageList.css'
-import { formatRelative } from 'date-fns'
+import { format, formatRelative } from 'date-fns'
 
 const MessageList = forwardRef(({ messageGroups }, ref) => {
   const [authUser] = useAuthUserContext()
@@ -16,7 +16,7 @@ const MessageList = forwardRef(({ messageGroups }, ref) => {
   return (
     <div className="message-list">
       {messageGroups.map((group) => {
-        const date = formatRelative(group.date, new Date()).split(' at ')[0]
+        const date = format(group.date, 'M/d/yyyy')
         return (
           <Fragment key={date}>
             <div className="message-list__date-separator">{date}</div>
