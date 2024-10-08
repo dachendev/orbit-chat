@@ -32,3 +32,8 @@ textarea,
 select {
   font: inherit;
 }
+
+button:not(:disabled),
+a[role='button'] {
+  cursor: pointer;
+}

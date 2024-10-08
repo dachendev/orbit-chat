@@ -13,7 +13,7 @@ const ChatPage = () => {
   const [recipients, setRecipients] = useState([])
   const navigate = useNavigate()
 
-  const selectedRecipient = recipientId
+  const recipient = recipientId
     ? recipients.find((p) => p.id === recipientId)
     : null
 
@@ -34,14 +34,16 @@ const ChatPage = () => {
       <Navbar />
       <div className="chat-layout">
         <div className="chat-layout__sidebar">
+          <h3>recipients</h3>
           <RecipientList
             recipients={recipients}
             onRecipientClick={onRecipientClick}
+            activeRecipientId={recipient.id}
           />
         </div>
         <div className="chat-layout__main">
-          {selectedRecipient ? (
-            <Chat recipient={selectedRecipient} />
+          {recipient ? (
+            <Chat recipient={recipient} />
           ) : (
             <div>Select a recipient to get started!</div>
           )}
