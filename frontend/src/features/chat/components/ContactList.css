@@ -1,14 +1,14 @@
-.recipient-list {
+.contact-list {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.recipient-list__item {
+.contact-list__item {
   margin-bottom: 0.25rem;
 }
 
-.recipient-list__button {
+.contact-list__button {
   width: 100%;
   padding: 0.375rem 0.75rem;
   border: 1px solid transparent;
@@ -18,7 +18,7 @@
   background-color: transparent;
 }
 
-.recipient-list__button--active {
+.contact-list__button--active {
   border-color: #808080;
   background-color: #c0c0c0;
 }

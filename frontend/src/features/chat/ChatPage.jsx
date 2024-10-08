@@ -3,30 +3,30 @@ import { useAuthUserContext } from '@features/auth'
 import { useEffect, useState } from 'react'
 import './ChatPage.css'
 import Chat from './components/Chat'
-import RecipientList from './components/RecipientList'
+import ContactList from './components/ContactList'
 import { getUsers } from './services/userService'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const ChatPage = () => {
   const recipientId = useParams().recipientId
   const [authUser] = useAuthUserContext()
-  const [recipients, setRecipients] = useState([])
+  const [contacts, setContacts] = useState([])
   const navigate = useNavigate()
 
   const recipient = recipientId
-    ? recipients.find((p) => p.id === recipientId)
+    ? contacts.find((p) => p.id === recipientId)
     : null
 
   useEffect(() => {
     getUsers()
       .then((users) => users.filter((p) => p.id !== authUser.id))
       .then((otherUsers) => {
-        setRecipients(otherUsers)
+        setContacts(otherUsers)
       })
   }, [])
 
-  const onRecipientClick = (recipient) => {
-    navigate(`/chat/${recipient.id}`)
+  const onContactClick = (contact) => {
+    navigate(`/chat/${contact.id}`)
   }
 
   return (
@@ -34,11 +34,11 @@ const ChatPage = () => {
       <Navbar />
       <div className="chat-layout">
         <div className="chat-layout__sidebar">
-          <h3>recipients</h3>
-          <RecipientList
-            recipients={recipients}
-            onRecipientClick={onRecipientClick}
-            activeRecipientId={recipient ? recipient.id : null}
+          <h3>contacts</h3>
+          <ContactList
+            contacts={contacts}
+            onContactClick={onContactClick}
+            activeContactId={recipient ? recipient.id : null}
           />
         </div>
         <div className="chat-layout__main">
