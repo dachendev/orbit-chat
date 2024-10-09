@@ -1,16 +1,17 @@
-import { AppNavbar } from '@shared/app'
 import { useAuthUserContext } from '@features/auth'
+import { AppNavbar } from '@shared/app'
 import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import './ChatPage.css'
 import Chat from './components/Chat'
 import ContactList from './components/ContactList'
-import { getUsers } from './services/userService'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useUserService } from './services/userService'
 
 const ChatPage = () => {
   const recipientId = useParams().recipientId
-  const [authUser] = useAuthUserContext()
   const [contacts, setContacts] = useState([])
+  const userService = useUserService()
+  const [authUser] = useAuthUserContext()
   const navigate = useNavigate()
 
   const recipient = recipientId
@@ -18,7 +19,8 @@ const ChatPage = () => {
     : null
 
   useEffect(() => {
-    getUsers()
+    userService
+      .all()
       .then((users) => users.filter((p) => p.id !== authUser.id))
       .then((otherUsers) => {
         setContacts(otherUsers)

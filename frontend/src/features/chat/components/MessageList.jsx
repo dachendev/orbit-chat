@@ -19,7 +19,7 @@ const MessageList = ({ messageGroups }) => {
               <div key={message.id} className="message-list__item">
                 <Message
                   message={message}
-                  isSender={message.sender.id === authUser.id}
+                  isSender={message.sender === authUser.id}
                 />
               </div>
             ))}

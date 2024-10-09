@@ -1,28 +1,35 @@
+import { useAuthUserContext } from '@/features/auth'
 import axios from 'axios'
+import { formatMessageData } from '../messageUtils'
+import { EventSourcePolyfill } from 'event-source-polyfill'
 
 const baseUrl = '/api/messages'
 
-export const createMessage = async (newMessage) => {
-  const response = await axios.post(baseUrl, newMessage)
-  const message = response.data
-  return {
-    ...message,
-    createdAt: new Date(message.createdAt),
-    updatedAt: new Date(message.updateAt),
-  }
-}
+export const useMessageService = () => {
+  const [authUser] = useAuthUserContext()
 
-export const getMessages = async (user1, user2) => {
-  const response = await axios.get(baseUrl, {
-    params: {
-      user1,
-      user2,
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authUser.token}`,
     },
-  })
+  }
 
-  return response.data.map((message) => ({
-    ...message,
-    createdAt: new Date(message.createdAt),
-    updatedAt: new Date(message.updatedAt),
-  }))
+  const send = async ({ content, recipientId }) =>
+    axios
+      .post(baseUrl, { content, recipientId }, config)
+      .then((response) => formatMessageData(response.data))
+
+  const history = async (otherUserId) =>
+    axios
+      .get(`${baseUrl}/history/${otherUserId}`, config)
+      .then((response) => response.data.map(formatMessageData))
+
+  const stream = (senderId) =>
+    new EventSourcePolyfill(`${baseUrl}/stream/${senderId}`, config)
+
+  return {
+    send,
+    history,
+    stream,
+  }
 }

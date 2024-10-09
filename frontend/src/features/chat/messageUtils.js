@@ -1,5 +1,11 @@
 import { startOfDay, toDate } from 'date-fns'
 
+export const formatMessageData = (message) => ({
+  ...message,
+  createdAt: new Date(message.createdAt),
+  updatedAt: new Date(message.updatedAt),
+})
+
 export const sortByDate = (arr, dateKey) => {
   return arr.toSorted(
     (a, b) => toDate(a[dateKey]).getTime() - toDate(b[dateKey]).getTime()

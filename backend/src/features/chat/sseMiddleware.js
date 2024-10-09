@@ -2,11 +2,12 @@ const stringify = (value) =>
   typeof value === 'object' ? JSON.stringify(value) : value
 
 const sseMiddleware = (options = {}) => {
-  const { keepAliveInterval = 30000 } = options
+  const { keepAliveInterval = 15000 } = options
 
   const headers = {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
+    'X-Accel-Buffering': 'no',
   }
 
   return (request, response, next) => {
