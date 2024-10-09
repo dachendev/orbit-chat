@@ -1,26 +1,31 @@
-const ensureString = (value) =>
-  typeof value === 'string' ? value : JSON.stringify(value)
-
-const sseHeaders = {
-  'Content-Type': 'text/event-stream',
-  'Cache-Control': 'no-cache',
-}
-
 const sseMiddleware = (options = {}) => {
+  const { keepAliveInterval = 5000 } = options
+
+  const headers = {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+  }
+
   return (request, response, next) => {
-    response.writeHead(200, sseHeaders)
+    response.writeHead(200, headers)
 
-    const send = (data) => response.write(`data: ${ensureString(data)}`)
+    const comment = (comment) => response.write(`: ${comment}\n`)
+    const field = (name, value) => response.write(`${name}: ${value}\n`)
+    const event = (type) => field('event', type)
+    const data = (data) => field('data', data)
+    const dispatch = () => response.write('\n')
 
-    const sendEvent = (event, data) =>
-      response.write(`event: ${event}\ndata: ${ensureString(data)}`)
-
-    const close = () => response.end()
+    setInterval(() => {
+      comment('keep-alive')
+      dispatch()
+    }, keepAliveInterval)
 
     response.sse = {
-      send,
-      sendEvent,
-      close,
+      comment,
+      field,
+      event,
+      data,
+      dispatch,
     }
 
     next()
