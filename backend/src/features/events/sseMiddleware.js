@@ -35,6 +35,7 @@ const sseMiddleware = (options = {}) => {
     })
 
     response.sse = {
+      buffer,
       write,
       comment,
       field,
