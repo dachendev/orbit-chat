@@ -5,7 +5,7 @@ eventRoutes.use(sseMiddleware())
 
 eventRoutes.get('/', (request, response) => {
   setInterval(() => {
-    response.sse.data('success!').dispatch()
+    response.sse.data('success!')
   }, 5000)
 })
 

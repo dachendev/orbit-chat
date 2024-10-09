@@ -1,5 +1,8 @@
+const stringify = (value) =>
+  typeof value === 'object' ? JSON.stringify(value) : value
+
 const sseMiddleware = (options = {}) => {
-  const { keepAliveInterval = 15000 } = options
+  const { keepAliveInterval = 30000 } = options
 
   const headers = {
     'Content-Type': 'text/event-stream',
@@ -9,25 +12,17 @@ const sseMiddleware = (options = {}) => {
   return (request, response, next) => {
     response.writeHead(200, headers)
 
-    let buffer = []
+    const comment = (comment) => response.write(`: ${comment}\n\n`)
 
-    const write = (data) => buffer.push(data) && response.sse
+    const event = (event, data) =>
+      response.write(`event: ${event}\ndata: ${stringify(data)}\n\n`)
 
-    const comment = (comment) => write(`: ${comment}\n`)
-    const field = (name, value) => write(`${name}: ${value}\n`)
-    const event = (type) => field('event', type)
-    const data = (data) => field('data', data)
+    const data = (data) => response.write(`data: ${stringify(data)}\n\n`)
 
-    const dispatch = () => {
-      if (buffer.length > 0) {
-        response.write(buffer.join('') + '\n')
-        buffer = []
-      }
-      return response.sse
-    }
+    comment('stream')
 
     const intervalId = setInterval(() => {
-      comment('keep-alive').dispatch()
+      comment('keep-alive')
     }, keepAliveInterval)
 
     request.on('close', () => {
@@ -35,16 +30,10 @@ const sseMiddleware = (options = {}) => {
     })
 
     response.sse = {
-      buffer,
-      write,
       comment,
-      field,
       event,
       data,
-      dispatch,
     }
-
-    response.sse.comment('stream').dispatch()
 
     next()
   }
