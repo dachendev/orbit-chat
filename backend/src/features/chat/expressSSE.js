@@ -79,7 +79,7 @@ const sseMiddleware = (options = {}) => {
       clearInterval(heartbeat)
     })
 
-    res.sse = sse
+    req.sse = sse
     next()
   }
 }
@@ -95,7 +95,7 @@ const sseBrokerMiddleware = (broker, options = {}) => {
     const subscriptions = new Map()
 
     const nextSSE = {
-      ...res.sse,
+      ...req.sse,
       subscribe: (topic, callback) => {
         const id = broker.subscribe(topic, callback)
         subscriptions.set(topic, id)
@@ -113,7 +113,7 @@ const sseBrokerMiddleware = (broker, options = {}) => {
 
     req.on('close', nextSSE.unsubscribeAll)
 
-    res.sse = nextSSE
+    req.sse = nextSSE
     next()
   }
 
@@ -131,7 +131,7 @@ const expressSSE = (router, options = {}) => {
 
   router.sse = (path, handler) => {
     router.get(path, sseBrokerMiddleware(broker, options), (req, res, next) => {
-      handler(res.sse, req, res, next)
+      handler(req.sse, req, res, next)
     })
   }
 
