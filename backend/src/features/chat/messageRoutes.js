@@ -1,11 +1,9 @@
-const messageRoutes = require('express').Router()
 const Message = require('./Message')
-const sseMiddleware = require('./sseMiddleware')
-const { createPubSub } = require('./pubSub')
+const { expressSSE } = require('./expressSSE')
+const messageRouter = require('express').Router()
+const messageSSE = expressSSE(messageRouter)
 
-const messageEvents = createPubSub()
-
-messageRoutes.post('/', async (request, response) => {
+messageRouter.post('/', async (request, response) => {
   const { content, recipientId } = request.body
   const senderId = request.user.id
 
@@ -16,13 +14,12 @@ messageRoutes.post('/', async (request, response) => {
   }
 
   const message = await Message.create(newMessage)
-
-  messageEvents.publish(`user:${recipientId}:from:${senderId}`, message)
+  messageSSE.publish(`user:${recipientId}:from:${senderId}`, message)
 
   response.status(201).json(message)
 })
 
-messageRoutes.get('/history/:otherUserId', async (request, response) => {
+messageRouter.get('/history/:otherUserId', async (request, response) => {
   const userId = request.user.id
   const otherUserId = request.params.otherUserId
 
@@ -36,21 +33,17 @@ messageRoutes.get('/history/:otherUserId', async (request, response) => {
   response.json(messages)
 })
 
-messageRoutes.get('/stream/:senderId', sseMiddleware(), (request, response) => {
-  const userId = request.user.id
-  const senderId = request.params.senderId
+messageRouter.sse('/stream/:senderId', (sse, req, res) => {
+  const userId = req.user.id
+  const senderId = req.params.senderId
 
   const topic = `user:${userId}:from:${senderId}`
 
-  messageEvents.subscribe(topic, (message) => {
-    response.sse.data(message)
+  sse.subscribe(topic, (message) => {
+    sse.send(message)
   })
 
-  response.sse.comment(`Subscribed to messages from user ${senderId}`)
-
-  request.on('close', () => {
-    messageEvents.unsubscribe(topic)
-  })
+  sse.comment(`Subscribed to messages from user ${senderId}`)
 })
 
-module.exports = messageRoutes
+module.exports = messageRouter

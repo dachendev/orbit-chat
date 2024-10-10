@@ -32,7 +32,7 @@ authRoutes.post('/login', async (request, response) => {
     username: user.username,
   }
 
-  const token = jwt.sign(payload, process.env.SECRET, { expiresIn: 3600 })
+  const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '1h' })
 
   response.json({ token, id: user._id, username: user.username })
 })
