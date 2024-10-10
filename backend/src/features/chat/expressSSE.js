@@ -109,6 +109,7 @@ const sseBrokerMiddleware = (broker, options = {}) => {
         subscriptions.forEach((id, topic) => broker.unsubscribe(topic, id))
         subscriptions.clear()
       },
+      publish: broker.publish,
     }
 
     req.on('close', nextSSE.unsubscribeAll)
@@ -129,8 +130,13 @@ const sseBrokerMiddleware = (broker, options = {}) => {
 const expressSSE = (router, options = {}) => {
   const broker = createBroker()
 
-  router.sse = (path, handler) => {
-    router.get(path, sseBrokerMiddleware(broker, options), (req, res, next) => {
+  router.sse = (path, ...args) => {
+    const handler = args.pop()
+    const middlewares = args
+
+    middlewares.push(sseBrokerMiddleware(broker, options))
+
+    router.get(path, ...middlewares, (req, res, next) => {
       handler(req.sse, req, res, next)
     })
   }
