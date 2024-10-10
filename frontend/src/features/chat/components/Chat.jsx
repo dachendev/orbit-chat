@@ -63,6 +63,7 @@ const Chat = ({ recipient }) => {
   const messageQuery = useQuery({
     queryKey,
     queryFn: () => messageService.history(recipient.id),
+    refetchOnWindowFocus: false,
   })
 
   useEffect(() => {
